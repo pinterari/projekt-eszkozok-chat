@@ -5,7 +5,7 @@
 Szükség lesz a MySql Workbench-re ([link](https://dev.mysql.com/downloads/workbench/)). Ha letöltöttétek és telepítettétek, akkor az src/Database Guide/ mappában találtok egy init.sql nevű fájlt. Ezt ha futtatjátok az MySql Workbenchből, akkor az létrehozza a program futásához szükséges adatbázist, táblákat és felhasználót. Továbbá a project a Mavennek köszönhetően minden dependenciát beránt, ami a futtatáshoz kell, tehát nem kell kézzel telepíteni a Hibernatet meg az egyéb adatbázis pluginokat.
 
 ## Magyarázat
-A Hibernatet összekötöttem az előbb létrehozott adatbázissal (bővebben hibernate.cfg.xml) és az adatbázisban található táblákat összepárosítottam egy velük megegyező POJO Entityvel (bővebben hu.elte.project.eszkozok.chat.entity)
+A Hibernatet összekötöttem az előbb létrehozott adatbázissal (bővebben hibernate.cfg.xml) és az adatbázisban található táblákat összepárosítottam egy velük megegyező POJO Entityvel (bővebben hu.elte.project.eszkozok.chat.entity). Továbbá a tesztek futtatásánál a piros wall-of-text az feature, nem bug. Ilyen furán logolja a dolgokat. Akkor van probléma csak, ha a jUnit teszt elhasal.
 
 ## Próba
 Elméletileg, ha mindent jól csináltatok, akkor ha futtatjátok a hu.elte.project.eszkozok.chat.database.TestJdbc.java és TestHibernate.java osztályokat, akkor az elsővel tudjátok tesztelni, hogy egyáltalán létrejött-e a kapcsolat az adatbázissal. A másodikkal meg, hogy a Hibernate ORM (Object/Relational Mapping), hogy megfogja könnyíteni az életünk.
