@@ -2,16 +2,20 @@ package hu.elte.project.eszkozok.chat.entity;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "User")
+@Table(name = "Users")
 public class User {
 
 	@Id
@@ -31,21 +35,24 @@ public class User {
 	@Column(name = "email")
 	private String email;
 
-	@Column(name = "password")
-	private String password;
+	@Column(name = "pwd")
+	private String pwd;
 
-	@ManyToMany(targetEntity = ChatGroup.class)
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name="users_chatgroup", 
+    joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")}, 
+    inverseJoinColumns={@JoinColumn(name="chat_group_id", referencedColumnName="id")})
 	private Set<ChatGroup> chatGroupSet;
 
 	public User() {
 	}
 
-	public User(String userName, String firstName, String lastName, String email, String password) {
+	public User(String userName, String firstName, String lastName, String email, String pwd) {
 		this.userName = userName;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.password = password;
+		this.pwd = pwd;
 	}
 
 	public int getId() {
@@ -89,11 +96,11 @@ public class User {
 	}
 
 	public String getPassword() {
-		return password;
+		return pwd;
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.pwd = password;
 	}
 
 	public Set<ChatGroup> getChatGroupSet() {
@@ -107,7 +114,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", email=" + email + ", password=" + password + ", chatGroupSet=" + chatGroupSet + "]";
+				+ ", email=" + email + ", password=" + pwd + ", chatGroupSet=" + chatGroupSet + "]";
 	}
 
 }

@@ -1,13 +1,11 @@
 package hu.elte.project.eszkozok.chat.entity;
 
-import java.sql.Date;
-
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,17 +17,17 @@ public class Message {
 	@Column(name = "id")
 	private int id;
 
-	@ManyToOne
-	private ChatGroup chatGroup;
+	@Column(name = "chat_group_id")
+	private int chatGroup_id;
 
-	@ManyToOne
-	private User user;
+	@Column(name = "user_id")
+	private int user;
 
 	@Column(name = "message")
 	private String message;
 
-	@Column(name = "date")
-	private Date date;
+	@Column(name = "sdate")
+	private Timestamp sdate;
 
 	public Message() {
 	}
@@ -42,19 +40,19 @@ public class Message {
 		this.id = id;
 	}
 
-	public ChatGroup getChatGroup() {
-		return chatGroup;
+	public int getChatGroup() {
+		return chatGroup_id;
 	}
 
-	public void setChatGroup(ChatGroup chatGroup) {
-		this.chatGroup = chatGroup;
+	public void setChatGroup(int chatGroup) {
+		this.chatGroup_id = chatGroup;
 	}
 
-	public User getUser() {
+	public int getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(int user) {
 		this.user = user;
 	}
 
@@ -66,18 +64,18 @@ public class Message {
 		this.message = message;
 	}
 
-	public Date getDate() {
-		return date;
+	public Timestamp getDate() {
+		return sdate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDate(Timestamp sqlDate) {
+		this.sdate = sqlDate;
 	}
 
 	@Override
 	public String toString() {
-		return "Message [id=" + id + ", chatGroup=" + chatGroup + ", user=" + user + ", message=" + message + ", date="
-				+ date + "]";
+		return "Message [id=" + id + ", chatGroup=" + chatGroup_id + ", user=" + user + ", message=" + message + ", date="
+				+ sdate + "]";
 	}
 
 }

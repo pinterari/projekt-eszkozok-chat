@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -27,7 +29,10 @@ public class ChatGroup {
 	@OneToMany(targetEntity = Message.class)
 	private List<Message> messageList;
 
-	@ManyToMany(targetEntity = User.class)
+	@ManyToMany
+	@JoinTable(name="users_chatgroup", 
+    joinColumns={@JoinColumn(name="chat_group_id", referencedColumnName="id")}, 
+    inverseJoinColumns={@JoinColumn(name="user_id", referencedColumnName="id")})
 	private Set<User> userSet;
 
 	public ChatGroup() {
