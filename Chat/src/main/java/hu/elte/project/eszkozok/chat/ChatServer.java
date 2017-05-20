@@ -1,5 +1,6 @@
 package hu.elte.project.eszkozok.chat;
 
+import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,6 +21,7 @@ import hu.elte.project.eszkozok.chat.encryption.PasswordEncryptor;
 import hu.elte.project.eszkozok.chat.entity.ChatGroup;
 import hu.elte.project.eszkozok.chat.entity.Message;
 import hu.elte.project.eszkozok.chat.entity.User;
+import hu.elte.project.eszkozok.chat.gui.ChatFrame;
 
 public class ChatServer {
 
@@ -335,9 +337,22 @@ public class ChatServer {
 	}
 
 	public static void main(String[] args) throws Exception {
-		ChatServer server = new ChatServer(8081);
+		/*ChatServer server = new ChatServer(8081);
 		if (server != null)
-			server.handleClients();
+			server.handleClients();*/
+		EventQueue.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				try{
+					ChatFrame frame=new ChatFrame();
+					frame.setVisible(true);
+				}catch (Exception ex){
+					ex.printStackTrace();
+				}
+				
+			}
+		});		
 	}
 
 }
