@@ -140,13 +140,16 @@ public class ChatServer {
 
 	// Az osszes felhasznalot kuldi el a kliensnek (uj felhasznalo felvetele a
 	// szobaba)
-	private synchronized void sendAllUsers(String name) {
+	private synchronized void sendValidUsersForinvite(String name, int roomID) {
 		List<User> users = UserDAO.getUsers();
+		Set<User> usersInGroup = ChatGroupDAO.getChatGroup(roomID).getUserSet();
 		
 		clients.get(name).println("USERS");
 		for (User user : users) {
-			String toSend = user.getId() + ": " + user.getUserName();
-			clients.get(name).println(toSend);
+			if (!user.getUserName().equals(name) && !usersInGroup.contains(user)) {
+				String toSend = user.getId() + ": " + user.getUserName();
+				clients.get(name).println(toSend);
+			}
 		}
 		clients.get(name).println("DONE");
 	}
@@ -266,27 +269,28 @@ public class ChatServer {
 						// Elerheto szobak elkuldese a kliensnek
 						sendChatrooms(UserDAO.getUser(name));
 						String roomId = br.readLine();
+						int numberRoomID = Integer.parseInt(roomId);
 
 						// Bejelentkezes a szobaba
-						currentRoom.replace(name, Integer.parseInt(roomId));
+						currentRoom.replace(name, numberRoomID);
 						// Korabbi uzenetek atkuldese a felhasznalonak
-						sendPrevMessages(Integer.parseInt(roomId), name);
+						sendPrevMessages(numberRoomID, name);
 						// A csoportban levo osszes embernek elkuldi az infot
 						// hogy a felhasznalo belepett a szobaba
-						updatePrevMessages(Integer.parseInt(roomId), name, " belepett.");
+						updatePrevMessages(numberRoomID, name, " belepett.");
 
-						while (!"exit".equals(message)) {
-							if (!"INVITEUSER".equals(message)) {
+						while (!"EXIT".equals(message.toUpperCase())) {
+							if (!"INVITEUSER".equals(message.toUpperCase())) {
 								// Uzenet kuldese a szobaba
 								message = br.readLine();
 								if (message == null)
 									break;
-								updatePrevMessages(Integer.parseInt(roomId), name, message);
+								updatePrevMessages(numberRoomID, name, message);
 							} else {
 								// Felhasznalo meghivasa a szobaba
-								sendAllUsers(name);
+								sendValidUsersForinvite(name, numberRoomID);
 								message = br.readLine();
-								inviteUser(Integer.parseInt(roomId), Integer.parseInt(message));
+								inviteUser(numberRoomID, Integer.parseInt(message));
 							}
 						}
 						// Kilepteti a szobabol

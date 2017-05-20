@@ -20,13 +20,6 @@ public class UserDAO {
 		return users;
 	}
 	
-	public static void saveUser(User user) {
-		Session currentSession = SessionFactoryHelper.getSessionFactory().getCurrentSession();
-		Transaction trans = currentSession.beginTransaction();
-		currentSession.saveOrUpdate(user);
-		trans.commit();
-	}
-	
 	public static User getUser(int id) {
 		Session currentSession = SessionFactoryHelper.getSessionFactory().getCurrentSession();
 		Transaction trans = currentSession.beginTransaction();
@@ -42,6 +35,13 @@ public class UserDAO {
 		User user = query.getSingleResult();
 		trans.commit();
 		return user;
+	}
+	
+	public static void saveUser(User user) {
+		Session currentSession = SessionFactoryHelper.getSessionFactory().getCurrentSession();
+		Transaction trans = currentSession.beginTransaction();
+		currentSession.saveOrUpdate(user);
+		trans.commit();
 	}
 	
 	public void deleteUser(int id) {
