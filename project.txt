@@ -1,0 +1,34 @@
+Projekt eszközök
+
+Használt eszközök:
+Javaslom, hogy maven project toolt használjunk a 3rd party pluginok lerántása, gyors, hasznos és mindent szép frissen tart.
+Továbbá eclipse, ha mindenkinek megfelel. Plusz ajánlom a SmartGit programot mindenkinek a repo kezelésére, nagyon álom.
+
+Adatbázis: 
+user:    	 id (pk), username, kereszt, vezetek, email, password (hashelve eltárolva),  profilkép (ez nagyon érdekes kérdés, adatbázisban általában képre 
+																									útvonalat szokás tárolni, nem magát a tényleges képet, 
+																									lehet túl nagy macera és nem is éri meg vele szenvedni,
+																									mert az ok hogy local megvan hogy te hogy akarsz kinézni
+																									de azt a többiek hogy látják?)
+message: 	 id (pk), chat_group_id (fk, group_chat tábla), user_id (fk, user tábla), message_text, date
+chat_group:  id (pk), name (optional)
+messages_in: id (pk), chat_group_id (fk, group_chat tábla), user_id (fk, user tábla)
+
+Gyors magyarázat az adatbázis schémához:
+Minden ID adatbazis által generált, auto increment. Userben tároljuk a felhasználókat, Messageben az üzeneteket, az elküldésük dátumát 
+(később ezalapján rendezve jelenítjük meg), hogy ki küldte (ID, ez lehetőséget ad ilyen fancy megjelenítésre, Messenger módi: te üzeneted 
+jobb oldalt, mindenki másé baloldalt, színek változnak stb) és a chat group ID-ja. A chat group csak egy segéd tábla, amivel a beszélgetéseket 
+osztályozzuk, lehet neve (Pl.: Projekt Eszközök Beszélgetés) de a null is valid, akkor nem tudom kap mondjuk megkapja a résztvevők 
+nevét. Azzal hogy van ilyen hogy group chat kb meg tudjuk oldani, hogy ne csak 1 to 1 beszélgetés jöhessen létre, hanem csoportbeszélgetés 
+is. Az utolsó messages_in (alt. név ötletet örömmel várok) tábla meg összegzi, hogy melyik chat groupba ki van benne.
+Logikai hiba remélem nincs benne, egy unalmas MI előadáson kezdtem el ezen gondolkodni. Természetesen, ha bármi fuckup 
+(logikai vagy bármilyen) van benne akkor szóljatok és kijavítjuk :)
+
+user:   username not null, unique, varchar2
+		keresz, vezetek, email not null, varchar2
+		pass not null, varchar2
+		
+message: message_text not null, varchar2
+		 data not null, date
+		 
+group_chat: name varchar2

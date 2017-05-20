@@ -14,7 +14,7 @@ public class TestEncryption extends TestCase{
 		char[] password = "password".toCharArray();
 
 		try {
-			String hash = argon2.hash(2, 65536, 1, password);
+			String hash = argon2.hash(2, 65536, 1, "password");
 			if (argon2.verify(hash, password)) {
 				System.out.println("Correct! Hashed password: " + hash);
 			} else {

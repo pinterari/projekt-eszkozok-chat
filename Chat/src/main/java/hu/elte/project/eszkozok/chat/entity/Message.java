@@ -18,10 +18,10 @@ public class Message {
 	private int id;
 
 	@Column(name = "chat_group_id")
-	private int chatGroup_id;
+	private int chatGroupID;
 
 	@Column(name = "user_id")
-	private int user;
+	private int userID;
 
 	@Column(name = "message")
 	private String message;
@@ -40,20 +40,20 @@ public class Message {
 		this.id = id;
 	}
 
-	public int getChatGroup() {
-		return chatGroup_id;
+	public int getChatGroupID() {
+		return chatGroupID;
 	}
 
-	public void setChatGroup(int chatGroup) {
-		this.chatGroup_id = chatGroup;
+	public void setChatGroupID(int chatGroup) {
+		this.chatGroupID = chatGroup;
 	}
 
-	public int getUser() {
-		return user;
+	public int getUserID() {
+		return userID;
 	}
 
-	public void setUser(int user) {
-		this.user = user;
+	public void setUserID(int user) {
+		this.userID = user;
 	}
 
 	public String getMessage() {
@@ -74,8 +74,8 @@ public class Message {
 
 	@Override
 	public String toString() {
-		return "Message [id=" + id + ", chatGroup=" + chatGroup_id + ", user=" + user + ", message=" + message + ", date="
-				+ sdate + "]";
+		return "Message [id=" + id + ", chatGroupID=" + chatGroupID + ", userID=" + userID + ", message=" + message
+				+ ", sdate=" + sdate + "]";
 	}
 
 }

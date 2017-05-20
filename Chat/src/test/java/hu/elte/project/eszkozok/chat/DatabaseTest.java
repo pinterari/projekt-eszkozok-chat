@@ -21,9 +21,11 @@ public class DatabaseTest extends TestCase {
 		String pass = "project_chat";
 		String jdbcUrl = "jdbc:mysql://localhost:3306/project_chat?useSSL=false";
 
-		try (Connection myCon = DriverManager.getConnection(jdbcUrl, user, pass)) {
+		try  {
 			System.out.println("Connecting to database: " + jdbcUrl);
+			Connection myCon = DriverManager.getConnection(jdbcUrl, user, pass);
 			System.out.println("Connection successfull!");
+			myCon.close();
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
