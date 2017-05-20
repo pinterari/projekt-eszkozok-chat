@@ -140,18 +140,21 @@ public class ChatServer {
 
 	// Az osszes felhasznalot kuldi el a kliensnek (uj felhasznalo felvetele a
 	// szobaba)
-	private synchronized void sendValidUsersForinvite(String name, int roomID) {
+	private synchronized int sendValidUsersForinvite(String name, int roomID) {
 		List<User> users = UserDAO.getUsers();
 		Set<User> usersInGroup = ChatGroupDAO.getChatGroup(roomID).getUserSet();
-		
+		int counter = 0;
+
 		clients.get(name).println("USERS");
 		for (User user : users) {
 			if (!user.getUserName().equals(name) && !usersInGroup.contains(user)) {
 				String toSend = user.getId() + ": " + user.getUserName();
 				clients.get(name).println(toSend);
+				counter++;
 			}
 		}
 		clients.get(name).println("DONE");
+		return counter;
 	}
 
 	// A kliens szamara elerheto szobakat kuldi at
@@ -168,7 +171,7 @@ public class ChatServer {
 	// Szoba mentése a táblába
 	public synchronized void createRoom(String name, String username) {
 		User user = UserDAO.getUser(username);
-		
+
 		ChatGroup room = new ChatGroup();
 		room.setName(name);
 		ChatGroupDAO.saveChatGroup(room);
@@ -176,17 +179,17 @@ public class ChatServer {
 	}
 
 	public synchronized void createMessage(Integer roomId, String username, String messageText) {
-			Message message = new Message();
-			
-			message.setMessage(messageText);
-			
-			Timestamp sqlDate = new Timestamp(new Date().getTime());
-			message.setDate(sqlDate);
-			
-			message.setChatGroupID(roomId);
-			message.setUserID(UserDAO.getUser(username).getId());
-			
-			MessageDAO.saveMessage(message);
+		Message message = new Message();
+
+		message.setMessage(messageText);
+
+		Timestamp sqlDate = new Timestamp(new Date().getTime());
+		message.setDate(sqlDate);
+
+		message.setChatGroupID(roomId);
+		message.setUserID(UserDAO.getUser(username).getId());
+
+		MessageDAO.saveMessage(message);
 	}
 
 	// Felhasznalo meghivasa a szobaba
@@ -296,9 +299,12 @@ public class ChatServer {
 								updatePrevMessages(numberRoomID, name, message);
 							} else {
 								// Felhasznalo meghivasa a szobaba
-								sendValidUsersForinvite(name, numberRoomID);
-								message = br.readLine();
-								inviteUser(numberRoomID, Integer.parseInt(message));
+								int numberOfSentUsers = sendValidUsersForinvite(name, numberRoomID);
+								if (numberOfSentUsers > 0) {
+									message = br.readLine();
+									inviteUser(numberRoomID, Integer.parseInt(message));
+								}
+								message = "";
 							}
 						}
 						// Kilepteti a szobabol

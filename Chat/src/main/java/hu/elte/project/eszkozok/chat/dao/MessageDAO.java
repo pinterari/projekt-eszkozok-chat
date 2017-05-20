@@ -14,18 +14,20 @@ public class MessageDAO {
 	public static List<Message> getMessages(int chatGroupID) {
 		Session currentSession = SessionFactoryHelper.getSessionFactory().getCurrentSession();
 		Transaction trans = currentSession.beginTransaction();
-		Query<Message> query = currentSession.createQuery("FROM Message m WHERE m.chatGroupID =:chatGroupID", Message.class)
-											 .setParameter("chatGroupID", chatGroupID);;
+		Query<Message> query = currentSession
+				.createQuery("FROM Message m WHERE m.chatGroupID =:chatGroupID", Message.class)
+				.setParameter("chatGroupID", chatGroupID);
+		;
 		List<Message> messages = query.getResultList();
 		trans.commit();
 		return messages;
 	}
-	
+
 	public static void saveMessage(Message message) {
 		Session currentSession = SessionFactoryHelper.getSessionFactory().getCurrentSession();
 		Transaction trans = currentSession.beginTransaction();
 		currentSession.saveOrUpdate(message);
 		trans.commit();
 	}
-	
+
 }

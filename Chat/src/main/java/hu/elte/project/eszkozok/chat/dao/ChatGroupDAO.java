@@ -17,24 +17,24 @@ public class ChatGroupDAO {
 		trans.commit();
 		return chatGroup;
 	}
-	
+
 	public static void addUserToChatGroup(ChatGroup chatGroup, User user) {
 		Session currentSession = SessionFactoryHelper.getSessionFactory().getCurrentSession();
 		Transaction trans = currentSession.beginTransaction();
-		
+
 		UserChatGroup userChatGroup = new UserChatGroup();
 		userChatGroup.setUserID(user.getId());
 		userChatGroup.setChatGroupID(chatGroup.getId());
-		
+
 		currentSession.saveOrUpdate(userChatGroup);
 		trans.commit();
 	}
-	
+
 	public static void saveChatGroup(ChatGroup chatGroup) {
 		Session currentSession = SessionFactoryHelper.getSessionFactory().getCurrentSession();
 		Transaction trans = currentSession.beginTransaction();
 		currentSession.saveOrUpdate(chatGroup);
 		trans.commit();
 	}
-	
+
 }

@@ -38,10 +38,10 @@ public class User {
 	@Column(name = "pwd")
 	private String pwd;
 
-	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name="users_chatgroup", 
-    joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")}, 
-    inverseJoinColumns={@JoinColumn(name="chat_group_id", referencedColumnName="id")})
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "users_chatgroup", joinColumns = {
+			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "chat_group_id", referencedColumnName = "id") })
 	private Set<ChatGroup> chatGroupSet;
 
 	public User() {

@@ -40,7 +40,7 @@ public class UserDAO {
 
 	public static boolean saveUser(User user) {
 		boolean userNotInDatabase = UserDAO.getUser(user.getUserName()) == null;
-		
+
 		if (userNotInDatabase) {
 			Session currentSession = SessionFactoryHelper.getSessionFactory().getCurrentSession();
 			Transaction trans = currentSession.beginTransaction();
@@ -48,7 +48,7 @@ public class UserDAO {
 			trans.commit();
 			return true;
 		}
-		
+
 		return false;
 	}
 

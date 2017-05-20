@@ -15,7 +15,7 @@ public class UserChatGroup {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	
+
 	@Column(name = "chat_group_id")
 	private int chatGroupID;
 
@@ -50,5 +50,5 @@ public class UserChatGroup {
 	public String toString() {
 		return "UserChatGroup [id=" + id + ", chatGroupID=" + chatGroupID + ", userID=" + userID + "]";
 	}
-	
+
 }

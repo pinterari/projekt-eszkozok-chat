@@ -6,8 +6,8 @@ import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import junit.framework.TestCase;
 
-public class TestEncryption extends TestCase{
-	
+public class TestEncryption extends TestCase {
+
 	@Test
 	public void testEncryptionPlugin() {
 		Argon2 argon2 = Argon2Factory.create();

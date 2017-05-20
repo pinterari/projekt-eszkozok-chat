@@ -30,7 +30,7 @@ public class ChatClient {
 			pw.println(stdinReader.readLine());
 			System.out.print("Jelszo: ");
 			pw.println(stdinReader.readLine());
-			
+
 			answer = br.readLine();
 			System.out.println(answer);
 		}
@@ -51,7 +51,7 @@ public class ChatClient {
 			pw.println(stdinReader.readLine());
 			System.out.print("Password: ");
 			pw.println(stdinReader.readLine());
-			
+
 			answer = br.readLine();
 			System.out.println(answer);
 		}
@@ -94,7 +94,7 @@ public class ChatClient {
 				String message = "";
 				String toDo = "";
 				try {
-					
+
 					System.out.println("Szoba keszites(1) / belepes szobaba(2) / kilepes(3)");
 
 					toDo = stdinReader.readLine();
