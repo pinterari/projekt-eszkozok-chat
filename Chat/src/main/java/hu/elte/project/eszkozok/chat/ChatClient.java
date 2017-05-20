@@ -110,8 +110,8 @@ public class ChatClient {
 							System.out.println("Chatszoba azonositoja:");
 							pw.println(stdinReader.readLine());
 
-							while (!message.equals("exit")) {
-								if (!message.equals("INVITEUSER")) {
+							while (!message.toUpperCase().equals("EXIT")) {
+								if (!message.toUpperCase().equals("INVITEUSER")) {
 									message = stdinReader.readLine();
 									pw.println(message);
 								} else {
