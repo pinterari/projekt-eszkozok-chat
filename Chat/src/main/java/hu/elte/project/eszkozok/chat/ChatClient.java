@@ -30,6 +30,7 @@ public class ChatClient {
 			pw.println(stdinReader.readLine());
 			System.out.print("Jelszo: ");
 			pw.println(stdinReader.readLine());
+			
 			answer = br.readLine();
 			System.out.println(answer);
 		}
@@ -38,16 +39,23 @@ public class ChatClient {
 
 	// Regisztracios adatok atkuldese szerverre
 	public void signUp(BufferedReader stdinReader) throws IOException {
-		System.out.print("Username: ");
-		pw.println(stdinReader.readLine());
-		System.out.print("First name: ");
-		pw.println(stdinReader.readLine());
-		System.out.print("Last name: ");
-		pw.println(stdinReader.readLine());
-		System.out.print("email: ");
-		pw.println(stdinReader.readLine());
-		System.out.print("Password: ");
-		pw.println(stdinReader.readLine());
+		String answer = "";
+		while (!answer.equals("ok")) {
+			System.out.print("Username: ");
+			pw.println(stdinReader.readLine());
+			System.out.print("First name: ");
+			pw.println(stdinReader.readLine());
+			System.out.print("Last name: ");
+			pw.println(stdinReader.readLine());
+			System.out.print("email: ");
+			pw.println(stdinReader.readLine());
+			System.out.print("Password: ");
+			pw.println(stdinReader.readLine());
+			
+			answer = br.readLine();
+			System.out.println(answer);
+		}
+		System.out.println("Sikeres regisztracio!");
 	}
 
 	// Listak kiiratasa
@@ -70,10 +78,14 @@ public class ChatClient {
 		System.out.println("Bejel(1) / Reg(2)");
 		String sin = stdinReader.readLine();
 		pw.println(sin);
-		if (sin.equals("2")) {
+		if (sin.equals("1")) {
+			signIn(stdinReader);
+		} else if (sin.equals("2")) {
 			signUp(stdinReader);
+			signIn(stdinReader);
+		} else {
+			return;
 		}
-		signIn(stdinReader);
 
 		// Szal a begepelt uzenetek tovabbitasara a szerver fele
 		new Thread() {

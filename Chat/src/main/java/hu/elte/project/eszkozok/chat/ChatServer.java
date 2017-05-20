@@ -214,16 +214,24 @@ public class ChatServer {
 
 		@Override
 		public void run() {
-			String message = null;
+			String message = "";
 			try {
 				// Regisztracio
 				if (br.readLine().equals("2")) {
-					String username = br.readLine();
-					String firstname = br.readLine();
-					String lastname = br.readLine();
-					String email = br.readLine();
-					String password = PasswordEncryptor.encryptPassword(br.readLine());
-					UserDAO.saveUser(new User(username, firstname, lastname, email, password));
+					boolean ok = false;
+					while (!ok) {
+						String username = br.readLine();
+						String firstname = br.readLine();
+						String lastname = br.readLine();
+						String email = br.readLine();
+						String password = PasswordEncryptor.encryptPassword(br.readLine());
+						if (UserDAO.saveUser(new User(username, firstname, lastname, email, password))) {
+							pw.println("ok");
+							ok = true;
+						} else {
+							pw.println("nok");
+						}
+					}
 				}
 
 				// Bejelentkezes
