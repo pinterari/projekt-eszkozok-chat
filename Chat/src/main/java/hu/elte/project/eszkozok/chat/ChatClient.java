@@ -3,6 +3,10 @@ package hu.elte.project.eszkozok.chat;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import hu.elte.project.eszkozok.chat.gui.ChatFrame;
+
+import java.awt.EventQueue;
 import java.io.*;
 
 public class ChatClient {
@@ -188,6 +192,19 @@ public class ChatClient {
 	}
 
 	public static void main(String[] args) throws Exception {
+		EventQueue.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					ChatFrame frame = new ChatFrame();
+					frame.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+
+			}
+		});
 		String host = "localhost"; // server host
 		int port = 8081; // server port
 		ChatClient cc = new ChatClient(host, port);

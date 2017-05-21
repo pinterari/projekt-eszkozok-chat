@@ -337,22 +337,9 @@ public class ChatServer {
 	}
 
 	public static void main(String[] args) throws Exception {
-		/*ChatServer server = new ChatServer(8081);
+		ChatServer server = new ChatServer(8081);
 		if (server != null)
-			server.handleClients();*/
-		EventQueue.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				try{
-					ChatFrame frame=new ChatFrame();
-					frame.setVisible(true);
-				}catch (Exception ex){
-					ex.printStackTrace();
-				}
-				
-			}
-		});		
+			server.handleClients();
 	}
 
 }
