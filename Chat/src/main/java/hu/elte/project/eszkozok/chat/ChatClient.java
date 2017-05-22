@@ -9,6 +9,13 @@ import hu.elte.project.eszkozok.chat.gui.ChatFrame;
 import java.awt.EventQueue;
 import java.io.*;
 
+/**
+ * <h1>ChatClient</h1> 
+ * A ChatClient a Chat alkalmazás kliens oldali részét valósítja meg,
+ * lehetővé téve a felhasználók egymással történő kommunikációját a szerveren keresztül.
+ * 
+ * @author Baráth Zsófia
+ */
 public class ChatClient {
 
 	private PrintWriter pw;
@@ -20,46 +27,67 @@ public class ChatClient {
 	private List<String> messages = new ArrayList<String>();
 	private Socket socket;
 
+	/**
+	 * A kliens konstruktora, ami létrehoz egy socketet a megadott paraméterekkel,
+	 * majd beállítja a kommunikációs csatornákat.
+	 *  
+	 * @param host 	Az a hoszt, amin keresztül kapcsolódunk a szerverhez.
+	 * @param port 	Az a port, amin keresztül kapcsolódunk a szerverhez.
+	 * @throws 		Exception 
+	 */
 	public ChatClient(String host, int port) throws Exception {
 		socket = new Socket(host, port);
 		pw = new PrintWriter(socket.getOutputStream(), true);
 		br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 	}
 
+	/**
+	 * A felhasználó bejelentkezését teszi lehetővé.
+	 * <p>
+	 * Újra bekéri az adatokat addig, amíg a szerver nem hagyja azokat jóvá.
+	 * 
+	 * @param stdinReader 	Ezen keresztül folyik a kommunikáció a felhasználóval.
+	 * @throws IOException
+	 */
 	public void signIn(BufferedReader stdinReader) throws IOException {
-		// Nev bekerese, amig a szerver valasza nem "ok"
 		String answer = "";
 		while (!answer.equals("ok")) {
-			System.out.print("Felhasznalonev: ");
+			System.out.print("Felhasznalónév: ");
 			pw.println(stdinReader.readLine());
-			System.out.print("Jelszo: ");
+			System.out.print("Jelszó: ");
 			pw.println(stdinReader.readLine());
 
 			answer = br.readLine();
 			System.out.println(answer);
 		}
-		System.out.println("Sikeres bejelentkezes.");
+		System.out.println("Sikeres bejelentkezés!");
 	}
 
-	// Regisztracios adatok atkuldese szerverre
+	/**
+	 * A felhasználó regisztrációját teszi lehetővé.
+	 * <p>
+	 * Újra bekéri az adatokat addig, amíg a szerver nem hagyja azokat jóvá.
+	 * 
+	 * @param stdinReader 	Ezen keresztül folyik a kommunikáció a felhasználóval.
+	 * @throws IOException
+	 */
 	public void signUp(BufferedReader stdinReader) throws IOException {
 		String answer = "";
 		while (!answer.equals("ok")) {
-			System.out.print("Username: ");
+			System.out.print("Felhasználónév: ");
 			pw.println(stdinReader.readLine());
-			System.out.print("First name: ");
+			System.out.print("Keresztnév: ");
 			pw.println(stdinReader.readLine());
-			System.out.print("Last name: ");
+			System.out.print("Vezetéknév: ");
 			pw.println(stdinReader.readLine());
-			System.out.print("email: ");
+			System.out.print("E-mail: ");
 			pw.println(stdinReader.readLine());
-			System.out.print("Password: ");
+			System.out.print("Jelszó: ");
 			pw.println(stdinReader.readLine());
 
 			answer = br.readLine();
-			System.out.println(answer);
 		}
-		System.out.println("Sikeres regisztracio!");
+		System.out.println("Sikeres regisztráció!");
 	}
 
 	// Listak kiiratasa
@@ -75,13 +103,30 @@ public class ChatClient {
 		}
 	}
 
+	/**
+	 * A szerverrel történő kommunikációt bonyolítja le.
+	 * <p>
+	 * Elsőként a felhasználónak be kell jelentkeznie, vagy regisztrálnia kell.
+	 * Sikeres regisztráció esetén a felhasználót átirányíta a bejelentkező oldalra.
+	 * <p>
+	 * Bejelentkezés után a felhasználónak lehetősége van kilépésre, belépésre egy létező szobába,
+	 * vagy új szoba létrehozására. A szobákba más felhasználókat is meghívhat.
+	 * <p>
+	 * A függvény két szálat indít; az első az üzeneteket továbbítja a szerverre,
+	 * a második pedig a szerverről érkező üzeneteket fogadja. 
+	 * 
+	 * @throws IOException
+	 */
 	public void communicate() throws IOException {
 		BufferedReader stdinReader = new BufferedReader(new InputStreamReader(System.in));
 
-		// Bejelentkezes vagy regisztracio. reg utan vissza a bejeltkezo oldalra
-		System.out.println("Bejel(1) / Reg(2)");
+		// Bejelentkezés vagy regisztráció
+		System.out.println("[1] Bejelentkezés");
+		System.out.println("[2] Regisztráció");
+		
 		String sin = stdinReader.readLine();
 		pw.println(sin);
+		
 		if (sin.equals("1")) {
 			signIn(stdinReader);
 		} else if (sin.equals("2")) {
@@ -91,7 +136,7 @@ public class ChatClient {
 			return;
 		}
 
-		// Szal a begepelt uzenetek tovabbitasara a szerver fele
+		// Üzenetek továbbítása a szerver felé
 		new Thread() {
 			public void run() {
 				BufferedReader stdinReader = new BufferedReader(new InputStreamReader(System.in));
@@ -99,34 +144,44 @@ public class ChatClient {
 				String toDo = "";
 				try {
 
-					System.out.println("Szoba keszites(1) / belepes szobaba(2) / kilepes(3)");
+					System.out.println("[1] Szoba létrehozása");
+					System.out.println("[2] Belépés egy létező szobába");
+					System.out.println("[3] Kilépés");
 
 					toDo = stdinReader.readLine();
 					pw.println(toDo);
 
 					while (!toDo.equals("3")) {
 						if (toDo.equals("1")) {
-							// Szoba nevenek bekerese, atkuldese serverre
-							System.out.println("Chatszoba neve:");
+
+							System.out.println("Szoba neve: ");
 							pw.println(stdinReader.readLine());
+							
 						} else if (toDo.equals("2")) {
-							// Szoba azonositojat varja, es atkuldi servernek
-							System.out.println("Chatszoba azonositoja:");
+							
+							System.out.println("Szoba azonosítója: ");
 							pw.println(stdinReader.readLine());
+							
+							System.out.println("Használható parancsok: ");
+							System.out.println(" -- [EXIT] Kilépés");
+							System.out.println(" -- [INVITEUSER] Felhasználó meghívása szobába");
 
 							while (!message.toUpperCase().equals("EXIT")) {
 								if (!message.toUpperCase().equals("INVITEUSER")) {
 									message = stdinReader.readLine();
 									pw.println(message);
 								} else {
-									System.out.println("Invite a user");
+									System.out.println("Felhasználó meghívása: ");
 									message = stdinReader.readLine();
 									pw.println(message);
 								}
 							}
 						}
 
-						System.out.println("Szoba keszites(1) / belepes szobaba(2) / kilepes(3)");
+						System.out.println("[1] Szoba létrehozása");
+						System.out.println("[2] Belépés egy létező szobába");
+						System.out.println("[3] Kilépés");
+						
 						toDo = stdinReader.readLine();
 						pw.println(toDo);
 						message = "";
@@ -134,17 +189,22 @@ public class ChatClient {
 					}
 
 				} catch (IOException e) {
-					System.err.println("Kommunikacios hiba a kuldo szalban.");
+					System.err.println("Kommunikácios hiba a küldő szálban.");
 				}
 				exit = true;
 			}
 		}.start();
 
-		// Szal az a szerver felol erkezo uzenetek fogadasara es megjelenitesere
+		// Üzenetek fogadása a szerver felől
 		new Thread() {
 			public void run() {
 				try {
 					while (!exit) {
+						
+						System.out.println("Használható parancsok:");
+						System.out.println(" -- [CHATROOMS] Szobák megjelenítése");
+						System.out.println(" -- [USERS] Bejelentkezett felhasználók megjelenítése");
+						System.out.println(" -- [PREVMESSAGES] Régebbi üzenetek betöltése");
 
 						String message = br.readLine();
 
@@ -184,16 +244,23 @@ public class ChatClient {
 						}
 					}
 				} catch (IOException e) {
-					System.err.println("Kommunikacios hiba a fogado szalban.");
+					System.err.println("Kommunikációs hiba a fogadó szálban.");
 				}
 			}
 		}.start();
 
 	}
 
+	/**
+	 * A kliens osztály main metódusa. Adott host és port paraméterekkel létrehoz
+	 * egy saját ChatClient példányt, majd elindítja a kommunikációt.
+	 * 
+	 * @param args 			Parancssori argumentumok listája
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
-		String host = "localhost"; // server host
-		int port = 8081; // server port
+		String host = "localhost";
+		int port = 8081;
 		ChatClient cc = new ChatClient(host, port);
 		cc.communicate();
 	}
