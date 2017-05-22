@@ -192,19 +192,6 @@ public class ChatClient {
 	}
 
 	public static void main(String[] args) throws Exception {
-		EventQueue.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					ChatFrame frame = new ChatFrame();
-					frame.setVisible(true);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-
-			}
-		});
 		String host = "localhost"; // server host
 		int port = 8081; // server port
 		ChatClient cc = new ChatClient(host, port);

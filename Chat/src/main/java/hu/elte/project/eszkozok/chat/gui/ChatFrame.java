@@ -38,7 +38,6 @@ public class ChatFrame extends JFrame {
 
 		loginPanel.setRegisterAction(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				loginPanel.setVisible(false);
 				registrationPanel.setVisible(true);
@@ -48,7 +47,6 @@ public class ChatFrame extends JFrame {
 
 		loginPanel.setLoginAction(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				loginPanel.setVisible(false);
 				menuPanel.setVisible(true);
@@ -58,7 +56,6 @@ public class ChatFrame extends JFrame {
 
 		registrationPanel.setRegisterAction(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO regisztráció
 				registrationPanel.setVisible(false);
@@ -69,7 +66,6 @@ public class ChatFrame extends JFrame {
 
 		registrationPanel.setBackAction(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				registrationPanel.setVisible(false);
 				loginPanel.setVisible(true);
@@ -79,7 +75,6 @@ public class ChatFrame extends JFrame {
 
 		menuPanel.setOpenChatroomAction(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO letezo chat szoba megnyitasa
 				menuPanel.addTab("Harambe fans", new ChatroomPanel("Harambe fans"));
@@ -88,7 +83,6 @@ public class ChatFrame extends JFrame {
 
 		menuPanel.setCreateChatroomAction(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO uj chat szoba letrehozasa
 			}

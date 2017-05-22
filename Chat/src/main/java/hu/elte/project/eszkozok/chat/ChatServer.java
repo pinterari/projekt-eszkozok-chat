@@ -1,6 +1,5 @@
 package hu.elte.project.eszkozok.chat;
 
-import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,7 +20,6 @@ import hu.elte.project.eszkozok.chat.encryption.PasswordEncryptor;
 import hu.elte.project.eszkozok.chat.entity.ChatGroup;
 import hu.elte.project.eszkozok.chat.entity.Message;
 import hu.elte.project.eszkozok.chat.entity.User;
-import hu.elte.project.eszkozok.chat.gui.ChatFrame;
 
 public class ChatServer {
 
