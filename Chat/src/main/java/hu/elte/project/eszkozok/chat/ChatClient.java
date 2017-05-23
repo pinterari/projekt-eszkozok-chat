@@ -3,10 +3,6 @@ package hu.elte.project.eszkozok.chat;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import hu.elte.project.eszkozok.chat.gui.ChatFrame;
-
-import java.awt.EventQueue;
 import java.io.*;
 
 /**
@@ -170,7 +166,7 @@ public class ChatClient {
 							
 							System.out.println("Használható parancsok: ");
 							System.out.println(" -- [EXIT] Kilépés");
-							System.out.println(" -- [INVITEUSER] Felhasználó meghívása szobába");
+							System.out.println(" -- [INVITEUSER] Felhasználó meghívása a szobába");
 
 							while (!message.toUpperCase().equals("EXIT")) {
 								if (!message.toUpperCase().equals("INVITEUSER")) {
@@ -210,7 +206,7 @@ public class ChatClient {
 						String message = br.readLine();
 
 						if (message != null) {
-							System.out.println("--- Elérhető chatszobák: ");
+							
 							if (message.equals("CHATROOMS")) {
 								message = br.readLine();
 								chatRooms.clear();
@@ -218,10 +214,10 @@ public class ChatClient {
 									chatRooms.add(message);
 									message = br.readLine();
 								}
+								System.out.println("--- Elérhető chatszobák: ");
 								listData(chatRooms);
 							}
-
-							System.out.println("--- Elérhető felhasználók: ");
+							
 							if (message.equals("USERS")) {
 								message = br.readLine();
 								signedInUsers.clear();
@@ -229,10 +225,10 @@ public class ChatClient {
 									signedInUsers.add(message);
 									message = br.readLine();
 								}
+								System.out.println("--- Elérhető felhasználók: ");
 								listData(signedInUsers);
 							}
 
-							System.out.println("--- Korábbi üzenetek: ");
 							if (message.equals("PREVMESSAGES")) {
 								message = br.readLine();
 								messages.clear();
@@ -240,6 +236,7 @@ public class ChatClient {
 									messages.add(message);
 									message = br.readLine();
 								}
+								System.out.println("--- Korábbi üzenetek: ");
 								listData(messages);
 							}
 
