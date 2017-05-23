@@ -280,6 +280,13 @@ public class ChatServer {
 	}
 
 	
+	/**
+	 * <h2>ClientHandler</h2>
+	 * A szerver és a kliens kommunikációját lebonyolító segédosztály,
+	 * ami egy szálat társít minden egyes csatlakozott felhasználóhoz.
+	 * 
+	 * @author Baráth Zsófia
+	 */
 	class ClientHandler extends Thread {
 
 		PrintWriter pw;
@@ -287,20 +294,48 @@ public class ChatServer {
 		String name;
 		String password;
 
+		/**
+		 * A konstruktor a kapott socket kommunikációs csatornáit kérdezi le,
+		 * ezeken keresztül fogja tartani a kapcsolatot az adott klienssel.
+		 * 
+		 * @param s A socket, amin keresztül a kliens kapcsolódik a szerverhez.
+		 */
 		ClientHandler(Socket s) {
 			try {
 				pw = new PrintWriter(s.getOutputStream(), true);
 				br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 			} catch (IOException e) {
-				System.err.println("Inicializalasi problema egy kliensnel.");
+				System.err.println("Inicializálási probléma történt egy kliensnél.");
 			}
 		}
 
+		/**
+		 * A kommunikációt lebonyolító szál. Főbb funkciói:
+		 * 
+		 * <h3>Regisztráció</h4>
+		 * Beolvassa a felhasználó adatait, majd megkísérli elmenteni őket.
+		 * Egészen addig kéri be a felhasználó adatait, amíg nem sikerült a mentés.
+		 * 
+		 * <h3>Bejelentkezés</h3>
+		 * Beolvassa a felhasználónevet és jelszót. Újra bekéri az adatokat,
+		 * amíg nem talál megfelelő párt.
+		 * 
+		 * <h3>A felhasználó által végrehajtani kívánt funkciók:</h3>
+		 * <ul>
+		 * 	<li> Chatszoba létrehozása </li>
+		 * 	<li> Belépés egy chatszobába </li>
+		 * 	<li> Felhasználó meghívása a chatszobába </li>
+		 *  <li> Üzenet küldése a chatszobába </li>
+		 *  <li> Kilépés a chatszobából </li>
+		 * </ul>
+		 */
+		
 		@Override
 		public void run() {
 			String message = "";
 			try {
-				// Regisztracio
+				
+				//Regisztráció
 				if (br.readLine().equals("2")) {
 					boolean ok = false;
 					while (!ok) {
@@ -309,6 +344,7 @@ public class ChatServer {
 						String lastname = br.readLine();
 						String email = br.readLine();
 						String password = PasswordEncryptor.encryptPassword(br.readLine());
+						
 						if (UserDAO.saveUser(new User(username, firstname, lastname, email, password))) {
 							pw.println("ok");
 							ok = true;
@@ -318,68 +354,68 @@ public class ChatServer {
 					}
 				}
 
-				// Bejelentkezes
+				// Bejelentkezés
 				boolean ok = false;
 				while (!ok) {
 					name = br.readLine();
 					password = br.readLine();
 
-					if (name == null)
-						return;
+					if (name == null) return;
 
 					User user = UserDAO.getUser(name);
+					
 					if (user == null) {
 						pw.println("nok");
 					} else {
 						ok = addClient(user, password, pw);
 
-						if (ok) {
-							pw.println("ok");
-						} else {
-							pw.println("nok");
-						}
+						if (ok) pw.println("ok");
+						else pw.println("nok");
+						
 					}
-
 				}
 
-				// Bejelentkezett felhasznalok es szobak kuldesi a kliensnek
+				// Elküldi a kliensnek a bejelentkezett felhasználók és elérhető szobák listáját
 				sendSignedInUsers(name);
 				sendChatrooms(UserDAO.getUser(name));
+				
 				// Kliens megadja hogy mit akar
 				String toDo = br.readLine();
 
 				while (!toDo.equals("3")) {
 
+					//Chatszoba létrehozása
 					if (toDo.equals("1")) {
-						// Chatszoba letrehozasa
 						String roomName = br.readLine();
 						createRoom(roomName, name);
 
 					} else if (toDo.equals("2")) {
-						// Belepes chatszobaba;
+						// Belépés egy chatszobába
 
-						// Elerheto szobak elkuldese a kliensnek
+						// Elérhető szobák elküldése a kliensnek
 						sendChatrooms(UserDAO.getUser(name));
 						String roomId = br.readLine();
 						int numberRoomID = Integer.parseInt(roomId);
 
-						// Bejelentkezes a szobaba
+						// Bejelentkezés a szobába
 						currentRoom.replace(name, numberRoomID);
-						// Korabbi uzenetek atkuldese a felhasznalonak
+						
+						// Korábbi üzenetek betöltése
 						sendPrevMessages(numberRoomID, name);
-						// A csoportban levo osszes embernek elkuldi az infot
-						// hogy a felhasznalo belepett a szobaba
+						
+						// Elküldi a csoportban lévőknek, hogy a felhasználó belépett
 						updatePrevMessages(numberRoomID, name, " belepett.");
 
 						while (!"EXIT".equals(message.toUpperCase())) {
+							
 							if (!"INVITEUSER".equals(message.toUpperCase())) {
-								// Uzenet kuldese a szobaba
+								// Üzenet küldése a szobába
 								message = br.readLine();
-								if (message == null)
-									break;
+								if (message == null) break;
 								updatePrevMessages(numberRoomID, name, message);
+								
 							} else {
-								// Felhasznalo meghivasa a szobaba
+								// Felhasználó meghívása a szobába
 								int numberOfSentUsers = sendValidUsersForinvite(name, numberRoomID);
 								if (numberOfSentUsers > 0) {
 									message = br.readLine();
@@ -388,28 +424,36 @@ public class ChatServer {
 								message = "";
 							}
 						}
-						// Kilepteti a szobabol
+						
+						// Kilépteti a felhasználót a szobából
 						currentRoom.replace(name, -1);
 
 					}
 
 					sendSignedInUsers(name);
 					sendChatrooms(UserDAO.getUser(name));
+					
 					toDo = br.readLine();
 					message = "";
 
 				}
 
 			} catch (IOException e) {
-				System.err.println("Kommunikacios problema egy kliensnel. Nev: " + name);
+				System.err.println("Kommunikációs probléma történt a következő kliensnél: " + name);
 			} finally {
-				if (name != null)
+				
+				if (name != null) {
 					send(name, "kijelentkezett.");
-				removeClient(name);
+					removeClient(name);
+				}
+					
 				try {
 					pw.close();
 					br.close();
 				} catch (IOException e) {
+					System.err.println("Hiba történt a kommunikációs csatornák bezárása közben"
+							+ " a következő kliensnél: " + name);
+					e.printStackTrace();
 				}
 			}
 		}
