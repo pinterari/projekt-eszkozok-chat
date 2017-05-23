@@ -90,14 +90,20 @@ public class ChatClient {
 		System.out.println("Sikeres regisztráció!");
 	}
 
-	// Listak kiiratasa
+	/**
+	 * Segédfüggvény adatok listázására.
+	 * 
+	 * @param data			Kiírni kívánt lista.
+	 * @throws IOException
+	 */
 	public void listData(List<String> data) throws IOException {
 		try {
 			Thread.sleep(1000);
 		} catch (Exception e) {
-			System.err.println("Hiba.");
+			System.err.println("Hiba történt az adok kiírása közben.");
 			e.printStackTrace();
 		}
+		
 		for (int i = 0; i < data.size(); ++i) {
 			System.out.println("+ " + data.get(i));
 		}
@@ -201,14 +207,10 @@ public class ChatClient {
 				try {
 					while (!exit) {
 						
-						System.out.println("Használható parancsok:");
-						System.out.println(" -- [CHATROOMS] Szobák megjelenítése");
-						System.out.println(" -- [USERS] Bejelentkezett felhasználók megjelenítése");
-						System.out.println(" -- [PREVMESSAGES] Régebbi üzenetek betöltése");
-
 						String message = br.readLine();
 
 						if (message != null) {
+							System.out.println("--- Elérhető chatszobák: ");
 							if (message.equals("CHATROOMS")) {
 								message = br.readLine();
 								chatRooms.clear();
@@ -219,6 +221,7 @@ public class ChatClient {
 								listData(chatRooms);
 							}
 
+							System.out.println("--- Elérhető felhasználók: ");
 							if (message.equals("USERS")) {
 								message = br.readLine();
 								signedInUsers.clear();
@@ -229,6 +232,7 @@ public class ChatClient {
 								listData(signedInUsers);
 							}
 
+							System.out.println("--- Korábbi üzenetek: ");
 							if (message.equals("PREVMESSAGES")) {
 								message = br.readLine();
 								messages.clear();
