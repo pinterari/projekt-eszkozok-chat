@@ -13,7 +13,7 @@ import hu.elte.project.eszkozok.chat.entity.Message;
 import hu.elte.project.eszkozok.chat.entity.User;
 import junit.framework.TestCase;
 
-public class DatabaseTest extends TestCase {
+public class DatabaseConnectionTest extends TestCase {
 
 	@Test
 	public void testJdbc() {
@@ -38,30 +38,15 @@ public class DatabaseTest extends TestCase {
 
 		Session session = factory.getCurrentSession();
 		try {
-			System.out.println("Creating new User...");
-			User user = new User("proba", "Imre", "Füty", "imike@gmail.com",
+			User user = new User("proba", "Imre", "Béla", "imike@gmail.com",
 					"hasheltPasswordAmiPerPillNincsIsHashelve");
-
-			System.out.println("Begining save transaction...");
 			session.beginTransaction();
-
-			System.out.println("Saving new User to Database...");
 			session.save(user);
-
-			System.out.println("Commiting save transaction...");
 			session.getTransaction().commit();
-
 			session = factory.getCurrentSession();
-			System.out.println("Begining delete transaction...");
 			session.beginTransaction();
-
-			System.out.println("Delete User from Database...");
 			session.createQuery("delete from User where username = 'proba'").executeUpdate();
-
-			System.out.println("Commiting delete transaction...");
 			session.getTransaction().commit();
-
-			System.out.println("Done!");
 		} finally {
 			factory.close();
 		}

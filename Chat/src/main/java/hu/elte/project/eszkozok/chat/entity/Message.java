@@ -8,6 +8,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * <h1>Message</h1>
+ * Üzenet entitás a Hibernate ORM kapcsolathoz.
+ * 
+ * @author Katona Bence
+ *
+ */
 @Entity
 @Table(name = "Message")
 public class Message {

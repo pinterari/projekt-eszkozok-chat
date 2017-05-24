@@ -7,6 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * <h1>UserChatGroup</h1> 
+ * Chat szobát és felhasználót összekötő entitás a Hibernate ORM kapcsolathoz.
+ * 
+ * @author Katona Bence
+ *
+ */
 @Entity
 @Table(name = "users_chatgroup")
 public class UserChatGroup {

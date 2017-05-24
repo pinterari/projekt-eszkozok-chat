@@ -14,6 +14,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+/**
+ * <h1>User</h1>
+ * Felhasználó entitás a Hibernate ORM kapcsolathoz.
+ * 
+ * @author Katona Bence
+ *
+ */
 @Entity
 @Table(name = "Users")
 public class User {

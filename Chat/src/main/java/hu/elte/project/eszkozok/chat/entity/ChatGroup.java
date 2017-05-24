@@ -1,6 +1,5 @@
 package hu.elte.project.eszkozok.chat.entity;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,9 +12,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * <h1>ChatGroup</h1> 
+ * Chat szoba entitás a Hibernate ORM kapcsolathoz.
+ * 
+ * @author Katona Bence
+ *
+ */
 @Entity
 @Table(name = "ChatGroup")
 public class ChatGroup {
@@ -28,9 +33,6 @@ public class ChatGroup {
 	@Column(name = "name")
 	private String name;
 
-	@OneToMany(targetEntity = Message.class)
-	private List<Message> messageList;
-
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "users_chatgroup", joinColumns = {
 			@JoinColumn(name = "chat_group_id", referencedColumnName = "id") }, inverseJoinColumns = {
@@ -38,6 +40,10 @@ public class ChatGroup {
 	private Set<User> userSet;
 
 	public ChatGroup() {
+	}
+	
+	public ChatGroup(String name) {
+		this.name = name;
 	}
 
 	public int getId() {
@@ -56,14 +62,6 @@ public class ChatGroup {
 		this.name = name;
 	}
 
-	public List<Message> getMessageList() {
-		return messageList;
-	}
-
-	public void setMessageList(List<Message> messageList) {
-		this.messageList = messageList;
-	}
-
 	public Set<User> getUserSet() {
 		return userSet;
 	}
@@ -74,6 +72,7 @@ public class ChatGroup {
 
 	@Override
 	public String toString() {
-		return "ChatGroup [id=" + id + ", name=" + name + ", messageList=" + messageList + ", userSet=" + userSet + "]";
+		return "ChatGroup [id=" + id + ", name=" + name + ", userSet=" + userSet + "]";
 	}
+
 }

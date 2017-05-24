@@ -6,7 +6,7 @@ import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import junit.framework.TestCase;
 
-public class TestEncryption extends TestCase {
+public class EncryptionTest extends TestCase {
 
 	@Test
 	public void testEncryptionPlugin() {
@@ -15,11 +15,7 @@ public class TestEncryption extends TestCase {
 
 		try {
 			String hash = argon2.hash(2, 65536, 1, "password");
-			if (argon2.verify(hash, password)) {
-				System.out.println("Correct! Hashed password: " + hash);
-			} else {
-				System.out.println("Incorrect!");
-			}
+			assertEquals(argon2.verify(hash, password), true);
 		} finally {
 			argon2.wipeArray(password);
 		}
