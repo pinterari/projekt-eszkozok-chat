@@ -8,8 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class MenuPanel extends JTabbedPane {
 
@@ -25,10 +27,26 @@ public class MenuPanel extends JTabbedPane {
 	private JButton btnOpenChatroom;
 	private JButton btnCreateChatroom;
 	private JTable tableChatrooms;
+	private JScrollPane tableScroll;
 	private JList<?> listUsers;
 
 	MenuPanel() {
+		fillTestData();
 		initComponents();
+	}
+
+	private void fillTestData() {
+		String[] columnNames = { "ID", "Chat name", "Participants" };
+		Object[][] testDataTable = { { 1, "Csopika", 5 }, { 2, "Hurutkák", 7 }, { 3, "Harambe Fans", 3 },
+				{ 4, "Dat Boiz", 4 }, };
+
+		DefaultTableModel model = new DefaultTableModel(testDataTable, columnNames);
+		tableChatrooms = new JTable(model);
+
+		String[] testDataList = {"meszaros2008erno","HUNtermester10","AnimeLover69","BestViktorEU"};
+		
+		listUsers = new JList<Object>(testDataList);
+
 	}
 
 	private void initComponents() {
@@ -37,37 +55,37 @@ public class MenuPanel extends JTabbedPane {
 		mainPanel.setLayout(null);
 
 		lblChatClient = new JLabel("Chat Client");
-		lblChatClient.setFont(new Font("Arial", Font.PLAIN, 32));
-		lblChatClient.setBounds(139, 5, 171, 38);
+		lblChatClient.setFont(new Font("Arial", Font.BOLD, 36));
+		lblChatClient.setBounds(160, 10, 200, 50);
 		mainPanel.add(lblChatClient);
 
 		lblAvaibleChatrooms = new JLabel("Avaible Chatrooms");
-		lblAvaibleChatrooms.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblAvaibleChatrooms.setBounds(63, 72, 116, 16);
+		lblAvaibleChatrooms.setFont(new Font("Arial", Font.PLAIN, 16));
+		lblAvaibleChatrooms.setBounds(90, 75, 150, 25);
 		mainPanel.add(lblAvaibleChatrooms);
 
-		tableChatrooms = new JTable();
-		tableChatrooms.setFont(new Font("Arial", Font.PLAIN, 13));
-		tableChatrooms.setBounds(12, 102, 229, 155);
-		mainPanel.add(tableChatrooms);
+		tableChatrooms.setFont(new Font("Arial", Font.PLAIN, 16));
+		tableChatrooms.setBounds(35, 110, 250, 150);
+		tableScroll = new JScrollPane(tableChatrooms);
+		tableScroll.setBounds(35, 110, 250, 150);
+		mainPanel.add(tableScroll);
 
 		btnOpenChatroom = new JButton("Open Chatroom");
 		btnOpenChatroom.setFont(new Font("Arial", Font.PLAIN, 13));
-		btnOpenChatroom.setBounds(63, 297, 148, 25);
+		btnOpenChatroom.setBounds(90, 285, 150, 25);
 		mainPanel.add(btnOpenChatroom);
 
 		lblUsers = new JLabel("Users");
-		lblUsers.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblUsers.setBounds(349, 72, 41, 16);
+		lblUsers.setFont(new Font("Arial", Font.PLAIN, 16));
+		lblUsers.setBounds(380, 75, 50, 25);
 		mainPanel.add(lblUsers);
 
-		listUsers = new JList<Object>();
-		listUsers.setBounds(325, 102, 89, 155);
+		listUsers.setBounds(340, 110, 125, 150);
 		mainPanel.add(listUsers);
 
 		btnCreateChatroom = new JButton("Create Chatroom");
 		btnCreateChatroom.setFont(new Font("Arial", Font.PLAIN, 13));
-		btnCreateChatroom.setBounds(303, 297, 137, 25);
+		btnCreateChatroom.setBounds(335, 285, 135, 25);
 		mainPanel.add(btnCreateChatroom);
 
 		addTab("MainTab", mainPanel);
