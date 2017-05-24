@@ -1,6 +1,7 @@
 package hu.elte.project.eszkozok.chat.gui;
 
 import javax.swing.JFrame;
+import javax.swing.JTable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,12 +14,13 @@ public class ChatFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private LoginPanel loginPanel;
 	private RegistrationPanel registrationPanel;
 	private MenuPanel menuPanel;
 
 	public ChatFrame() {
-		setLocation(200,200);
+		setLocation(200, 200);
 		setTitle("Chat Client\r\n");
 		setSize(new Dimension(500, 500));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -34,7 +36,7 @@ public class ChatFrame extends JFrame {
 		loginPanel.setVisible(true);
 		registrationPanel.setVisible(false);
 		menuPanel.setVisible(false);
-		
+
 		getContentPane().setLayout(null);
 		loginPanel.setBounds(50, 0, 400, 400);
 		registrationPanel.setBounds(50, 0, 400, 400);
@@ -85,7 +87,17 @@ public class ChatFrame extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				// TODO letezo chat szoba megnyitasa
-				menuPanel.addTab("Harambe fans", new ChatroomPanel("Harambe fans"));
+				String chatroomName = menuPanel.getSelectedChatroomname();
+				if (!("".equals(chatroomName))) {
+					final ChatroomPanel actualChatroom = new ChatroomPanel(chatroomName);
+					actualChatroom.setCloseChatroomAction(new ActionListener() {
+
+						public void actionPerformed(ActionEvent e) {
+							menuPanel.setSelectedIndex(0);
+						}
+					});
+					menuPanel.addTab(chatroomName, actualChatroom);
+				}
 			}
 		});
 

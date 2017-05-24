@@ -43,8 +43,8 @@ public class MenuPanel extends JTabbedPane {
 		DefaultTableModel model = new DefaultTableModel(testDataTable, columnNames);
 		tableChatrooms = new JTable(model);
 
-		String[] testDataList = {"meszaros2008erno","HUNtermester10","AnimeLover69","BestViktorEU"};
-		
+		String[] testDataList = { "meszaros2008erno", "HUNtermester10", "AnimeLover69", "BestViktorEU" };
+
 		listUsers = new JList<Object>(testDataList);
 
 	}
@@ -97,5 +97,13 @@ public class MenuPanel extends JTabbedPane {
 
 	public void setCreateChatroomAction(ActionListener actionListener) {
 		btnCreateChatroom.addActionListener(actionListener);
+	}
+
+	public String getSelectedChatroomname() {
+		try {
+			return (String) tableChatrooms.getValueAt(tableChatrooms.getSelectedRow(), 1);
+		} catch (ArrayIndexOutOfBoundsException ex) {
+			return "";
+		}
 	}
 }
