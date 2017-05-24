@@ -1,0 +1,7 @@
+hu.elte.project.eszkozok.chat
+hu.elte.project.eszkozok.chat.dao
+hu.elte.project.eszkozok.chat.db
+hu.elte.project.eszkozok.chat.encryption
+hu.elte.project.eszkozok.chat.entity
+hu.elte.project.eszkozok.chat.gui
+org.eclipse.wb.swing
