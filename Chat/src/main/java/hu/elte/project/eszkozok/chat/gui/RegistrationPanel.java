@@ -39,67 +39,67 @@ public class RegistrationPanel extends JPanel {
 
 	private void initComponents() {
 		lblRegistration = new JLabel("Registration");
-		lblRegistration.setBounds(111, 3, 188, 38);
-		lblRegistration.setFont(new Font("Arial", Font.BOLD, 32));
+		lblRegistration.setBounds(90, 25, 220, 50);
+		lblRegistration.setFont(new Font("Arial", Font.BOLD, 36));
 		add(lblRegistration);
 
 		lblUsername = new JLabel("Username");
-		lblUsername.setBounds(69, 54, 59, 15);
-		lblUsername.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblUsername.setBounds(65, 90, 100, 25);
+		lblUsername.setFont(new Font("Arial", Font.PLAIN, 16));
 		add(lblUsername);
 
 		lblFirstName = new JLabel("First Name");
-		lblFirstName.setBounds(69, 82, 64, 15);
-		lblFirstName.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblFirstName.setBounds(65, 130, 100, 25);
+		lblFirstName.setFont(new Font("Arial", Font.PLAIN, 16));
 		add(lblFirstName);
 
 		lblLastName = new JLabel("Last Name");
-		lblLastName.setBounds(69, 110, 63, 15);
-		lblLastName.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblLastName.setBounds(65, 170, 100, 25);
+		lblLastName.setFont(new Font("Arial", Font.PLAIN, 16));
 		add(lblLastName);
 
 		lblEmailAddress = new JLabel("Email Address");
-		lblEmailAddress.setBounds(69, 138, 85, 15);
-		lblEmailAddress.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblEmailAddress.setBounds(65, 210, 110, 25);
+		lblEmailAddress.setFont(new Font("Arial", Font.PLAIN, 16));
 		add(lblEmailAddress);
 
 		lblPassword = new JLabel("Password");
-		lblPassword.setBounds(69, 166, 57, 15);
-		lblPassword.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblPassword.setBounds(65, 250, 100, 25);
+		lblPassword.setFont(new Font("Arial", Font.PLAIN, 16));
 		add(lblPassword);
 
 		btnRegister = new JButton("Register");
-		btnRegister.setBounds(121, 197, 141, 25);
+		btnRegister.setBounds(100, 300, 200, 25);
 		btnRegister.setFont(new Font("Arial", Font.PLAIN, 16));
 		add(btnRegister);
 
 		btnBack = new JButton("Back");
-		btnBack.setBounds(154, 235, 71, 23);
+		btnBack.setBounds(150, 350, 100, 25);
 		btnBack.setFont(new Font("Arial", Font.PLAIN, 13));
 		add(btnBack);
 
 		tfUsername = new JTextField();
-		tfUsername.setBounds(225, 50, 116, 22);
+		tfUsername.setBounds(215, 90, 120, 25);
 		tfUsername.setColumns(10);
 		add(tfUsername);
 
 		tfFirstName = new JTextField();
-		tfFirstName.setBounds(225, 78, 116, 22);
+		tfFirstName.setBounds(215, 130, 120, 25);
 		tfFirstName.setColumns(10);
 		add(tfFirstName);
 
 		tfLastName = new JTextField();
-		tfLastName.setBounds(226, 106, 116, 22);
+		tfLastName.setBounds(215, 170, 120, 25);
 		tfLastName.setColumns(10);
 		add(tfLastName);
 
 		tfEmail = new JTextField();
-		tfEmail.setBounds(226, 134, 116, 22);
+		tfEmail.setBounds(215, 210, 120, 25);
 		tfEmail.setColumns(10);
 		add(tfEmail);
 
 		passwordField = new JPasswordField();
-		passwordField.setBounds(226, 162, 116, 22);
+		passwordField.setBounds(215, 250, 120, 25);
 		add(passwordField);
 	}
 

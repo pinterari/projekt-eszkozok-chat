@@ -4,8 +4,9 @@ import javax.swing.JFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 
 public class ChatFrame extends JFrame {
 	/**
@@ -17,9 +18,11 @@ public class ChatFrame extends JFrame {
 	private MenuPanel menuPanel;
 
 	public ChatFrame() {
+		setLocation(200,200);
 		setTitle("Chat Client\r\n");
 		setSize(new Dimension(500, 500));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setResizable(false);
 		initComponents();
 	}
 
@@ -31,6 +34,11 @@ public class ChatFrame extends JFrame {
 		loginPanel.setVisible(true);
 		registrationPanel.setVisible(false);
 		menuPanel.setVisible(false);
+		
+		getContentPane().setLayout(null);
+		loginPanel.setBounds(50, 0, 400, 400);
+		registrationPanel.setBounds(50, 0, 400, 400);
+		menuPanel.setBounds(0, 0, 500, 500);
 
 		getContentPane().add(loginPanel);
 		getContentPane().add(registrationPanel);
